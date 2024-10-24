@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { Job } from './types/types';
 
 function App() {
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/jobs')
+      .then((response) => response.json())
+      .then((data) => setJobs(data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Jobs</h1>
+      <ul>
+        {jobs.map((job:Job) => (
+          <li key={job.id}>
+            {job.name} 
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
