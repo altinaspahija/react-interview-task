@@ -1,9 +1,14 @@
 import { useGetAll } from "../../services/useApi";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { Job } from "../../types/types";
+import { useNavigate } from "react-router-dom";
 
 export default function JobsTable() {
   const { data: jobs, error, isLoading } = useGetAll('/jobs'); 
+  const navigateTo = useNavigate();
+  const handleRowClick = (jobId: string) => {
+    navigateTo(`/${jobId}`);
+  };
 
   if (isLoading) {
     return <div>Loading jobs...</div>;
@@ -12,6 +17,7 @@ export default function JobsTable() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+  
 
   return (
     <div className="my-4 shadow-lg rounded-lg overflow-hidden">
@@ -43,6 +49,7 @@ export default function JobsTable() {
               <tr
                 key={index}
                 className={`${index % 2 !== 0 ? "bg-white" : "bg-[#F8F8FA]"} hover:cursor-pointer`}
+                onClick={() => handleRowClick(job.id)}
               >
                 <td className="w-1/4 font-semibold text-center text-md text-[#1264A3]">{job.name}</td>
                 <td className="w-1/4">
