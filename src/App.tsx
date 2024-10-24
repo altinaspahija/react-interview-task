@@ -1,27 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Job } from './types/types';
+import JobsStatuses from "./components/jobs/JobsStatuses";
+import JobsTable from "./components/jobs/JobsTable";
 
-function App() {
-  const [jobs, setJobs] = useState<Job[]>([]);
-
-  useEffect(() => {
-    fetch('http://localhost:4000/jobs')
-      .then((response) => response.json())
-      .then((data) => setJobs(data));
-  }, []);
-
+export default function App() {
   return (
-    <div>
-      <h1>Jobs</h1>
-      <ul>
-        {jobs.map((job:Job) => (
-          <li key={job.id}>
-            {job.name} 
-          </li>
-        ))}
-      </ul>
-    </div>
+    <div className='m-2 bg-[#F4F5F6]'>
+      <JobsStatuses />
+      <JobsTable />
+  </div>
   );
 }
-
-export default App;
