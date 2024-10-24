@@ -11,11 +11,6 @@ const apiService = {
     return response.data;
   },
 
-  getByQuery: async <T>(url: string, queryParams: any): Promise<T[]> => {
-    const response = await axiosClient.get(url, { params: queryParams });
-    return response.data;
-  },
-
   post: async <T>(url: string, data: T): Promise<T> => {
     const response = await axiosClient.post(url, data);
     return response.data;
