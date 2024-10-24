@@ -9,9 +9,7 @@ export default function SearchInput({ onSearch }: SearchInputProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchJobs = (e: React.ChangeEvent<HTMLInputElement>) => {
-   
     const value = e.target.value;
-    console.log(value);
     setSearchTerm(value); 
     onSearch(value); 
   };
