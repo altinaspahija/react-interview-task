@@ -2,6 +2,8 @@ import { useGetAll } from "../../services/useApi";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { Job } from "../../types/types";
 import { useNavigate } from "react-router-dom";
+import {CreateButton } from "../common/Button";
+import SearchInput from "../common/Search";
 
 export default function JobsTable() {
   const { data: jobs, error, isLoading } = useGetAll('/jobs'); 
@@ -37,6 +39,12 @@ export default function JobsTable() {
                   color="#1264A3"
                 />
                 <p className="text-[#323338] font-normal text-sm">Jobs List</p>
+              </td>
+              <td className="text-right py-4">
+                <div className="flex h-full justify-end">
+                  <SearchInput />
+                  <CreateButton/>
+                </div>
               </td>
             </tr>
             <tr>
