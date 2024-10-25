@@ -7,10 +7,11 @@ import SearchInput from "../common/Search";
 import { useEffect, useState } from "react";
 
 export default function JobsTable() {
-  const { data: jobs, error, isLoading } = useGetAll("/jobs");
-  const { postData: addNewJob, isLoading: isAdding, error: addError } = usePost();
   const [searchValue, setSearchValue] = useState<string>("");
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+  const { data: jobs, error, isLoading } = useGetAll("/jobs");
+  const { postData: addNewJob, isLoading: isAdding, error: addError } = usePost();
+
 
   useEffect(() => {
     if (jobs && !searchValue) {
@@ -95,7 +96,6 @@ export default function JobsTable() {
                 Status
               </th>
             </tr>
-
             {filteredJobs?.map((job: Job, index: number) => (
               <tr
                 key={index}

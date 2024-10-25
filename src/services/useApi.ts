@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import apiService from '../api/apiService';
+import { getJobCountsByStatus } from '../api/jobsService';
 
 export function useGetAll(endpoint: string) {
   const [data, setData] = useState<any>(null);
@@ -93,6 +94,27 @@ export function usePut() {
   return { putData, error, isLoading };
 }
 
+export function useJobCountsByStatus() {
+  const [statuses, setStatuses] = useState<any[]>([]);
+  const [statusCounts, setStatusCounts] = useState<Record<string, number>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchJobCounts = async () => {
+      try {
+        const { statuses, statusCounts } = await getJobCountsByStatus();
+        setStatuses(statuses);
+        setStatusCounts(statusCounts);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
+    fetchJobCounts();
+  }, []);
 
+  return { statuses, statusCounts, isLoading, error };
+}

@@ -7,8 +7,7 @@ import { useFormik } from "formik";
 import { useGetAll, usePost, usePut } from "../../services/useApi";
 import Select from "react-select";
 import { AiFillInfoCircle } from "react-icons/ai";
-import { Category, Job, Status } from "../../types/types";
-import { colorPalette } from "../../types/colors";
+import { Category, Item, Job, Status } from "../../types/types";
 
 interface CreateJobProps {
   showModal: boolean;
@@ -23,6 +22,7 @@ function CreateJob({
   setFilteredJobs,
 }: CreateJobProps) {
   const [id, setId] = useState<string>("0");
+  const colorPalette = ["#4CAF50", "#FFEB3B", "#9C27B0", "#ECDE7C", "#FE4C4A"];
   const { postData: createJob, error, isLoading } = usePost();
   const {
     data: categories = [],
@@ -46,7 +46,7 @@ function CreateJob({
       form.resetForm();
     }
   }, [showModal]);
-  
+
   const categoryOptions = categories?.map(
     (category: Category, index: number) => ({
       value: category.name,
@@ -117,9 +117,9 @@ function CreateJob({
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative mx-auto w-[800px] h-[350px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between px-4 py-3 border-b border-solid border-2 border-[#EAEAEA] rounded-t-md bg-[#F5F5F7]">
+                <div className="flex items-start justify-between px-4 py-3 border-b border-solid border-2 border-[#EAEAEA] rounded-md bg-[#F5F5F7]">
                   <p className="text-md font-semibold text-[#323338] self-center">
-                    Create Job
+                    Create new job
                   </p>
                   <BiX
                     className="w-6 h-6 inline-block self-center bg-transparent cursor-pointer"
@@ -161,7 +161,7 @@ function CreateJob({
                         {form.errors.name}
                       </div>
                     )}
-            
+
                     <div className="flex flex-row justify-start py-4 w-full space-x-4 text-left">
                       {/* Category Section */}
                       <div className="flex flex-col w-1/2">
@@ -190,7 +190,7 @@ function CreateJob({
                                 : "white",
                               color: state.isSelected ? "white" : "#323338",
                               "&:hover": {
-                                backgroundColor: state.data.color, 
+                                backgroundColor: state.data.color,
                                 color: "white",
                               },
                             }),
@@ -266,11 +266,11 @@ function CreateJob({
                             option: (provided, state) => ({
                               ...provided,
                               backgroundColor: state.isFocused
-                                ? state.data.color || "#EAEAEA" 
+                                ? state.data.color || "#EAEAEA"
                                 : "white",
                               color: state.isSelected ? "white" : "#323338",
                               "&:hover": {
-                                backgroundColor: state.data.color, 
+                                backgroundColor: state.data.color,
                                 color: "white",
                               },
                             }),
@@ -345,4 +345,195 @@ function CreateJob({
     </>
   );
 }
-export { CreateJob };
+
+interface UpdateItemProps {
+  isUpdateModalOpen: boolean;
+  setIsUpdateModalOpen: (show: boolean) => void;
+  itemId: string | undefined;
+  filteredItems: Item[];
+  setFilteredItems: (items: Item[]) => void;
+  originalItems: Item[];
+  setOriginalItems: (items: Item[]) => void;
+}
+
+function UpdateItem({
+  isUpdateModalOpen,
+  setIsUpdateModalOpen,
+  itemId,
+  filteredItems,
+  setFilteredItems,
+}: UpdateItemProps) {
+  const { putData: updateItem, isLoading, error } = usePut();
+
+  const itemSelected = filteredItems.find((item) => item.id === itemId);
+
+  const UpdateItemSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    quantity: Yup.number().required("Quantity is required"),
+    description: Yup.string().required("Description is required"),
+    notes: Yup.string().required("Notes is required"),
+  });
+
+  const form = useFormik({
+    initialValues: {
+      id: itemSelected?.id || "0",
+      name: itemSelected?.name || "",
+      quantity: itemSelected?.quantity || 0,
+      description: itemSelected?.description || "",
+      notes: itemSelected?.notes || "",
+    },
+    validationSchema: UpdateItemSchema,
+    onSubmit: async (values: Item) => {
+      try {
+        const updatedItem = await updateItem(`/items`, values.id, values);
+        setFilteredItems(
+          filteredItems?.map((item) =>
+            item.id === itemId ? updatedItem : item
+          )
+        );
+        setIsUpdateModalOpen(false);
+      } catch (error) {
+        console.error("Error updating item:", error);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (itemSelected) {
+      form.setValues({
+        id: itemSelected.id,
+        name: itemSelected.name,
+        quantity: itemSelected.quantity,
+        description: itemSelected.description,
+        notes: itemSelected.notes,
+      });
+    }
+  }, [itemSelected]);
+
+  return (
+    <>
+      {isUpdateModalOpen && (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-10 z-50 outline-none focus:outline-none pb-20">
+            <div className="relative w-[800px] h-[350px] mb-20">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="flex items-start justify-between px-4 py-3 border-b border-solid border-2 border-[#EAEAEA] rounded-md bg-[#F5F5F7]">
+                  <p className="text-md font-semibold text-[#323338] self-center">
+                    Update Item
+                  </p>
+                  <BiX
+                    className="w-6 h-6 inline-block self-center bg-transparent cursor-pointer"
+                    onClick={() => setIsUpdateModalOpen(false)}
+                  />
+                </div>
+
+                <div className="flex flex-row justify-start items-start px-4 pt-2 pb-0">
+                  <div className="relative group">
+                    <AiFillInfoCircle
+                      className="w-[20px] h-[20px] inline-block mr-2"
+                      color="#1264A3"
+                    />
+
+                    <div className="absolute bottom-full mb-2 ml-10 w-16 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded py-1 px-2 transition-opacity duration-300">
+                      Modify data to update the item
+                    </div>
+                  </div>
+                  <p className="text-[#323338] font-normal text-sm mt-1">
+                    Informative piece of text that can be used regarding this
+                    modal.
+                  </p>
+                </div>
+
+                <form onSubmit={form.handleSubmit}>
+                  <div className="flex flex-col justify-start items-start p-4">
+                    <div className="flex flex-row justify-start py-4 w-full space-x-4">
+                      <div className="flex flex-col w-1/2">
+                        <label className="text-[#323338] text-md font-semibold mb-2">
+                          Quantity
+                        </label>
+                        <input
+                          type="number"
+                          name="quantity"
+                          value={form.values.quantity}
+                          onChange={form.handleChange}
+                          className="text-sm placeholder:text-[#E0E0E1] text-[#323338] font-normal self-center py-2 px-1 outline-none bg-[#F5F5F7] w-full"
+                        />
+                        {form.errors.quantity && form.touched.quantity && (
+                          <div className="text-red-500 text-xs ml-1 mt-1">
+                            {form.errors.quantity}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col w-1/2">
+                        <label className="text-[#323338] text-md font-semibold mb-2">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={form.values.name}
+                          onChange={form.handleChange}
+                          className="text-sm placeholder:text-[#E0E0E1] text-[#323338] font-normal self-center py-2 px-1 outline-none bg-[#F5F5F7] w-full"
+                        />
+                        {form.errors.name && form.touched.name && (
+                          <div className="text-red-500 text-xs ml-1 mt-1">
+                            {form.errors.name}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col justify-start py-4 w-full">
+                      <label className="text-[#323338] text-md font-semibold mb-2">
+                        Description
+                      </label>
+                      <textarea
+                        name="description"
+                        value={form.values.description}
+                        onChange={form.handleChange}
+                        className="text-sm placeholder:text-[#E0E0E1] text-[#323338] font-normal self-center py-2 px-1 outline-none bg-[#F5F5F7] w-full"
+                      />
+                      {form.errors.description && form.touched.description && (
+                        <div className="text-red-500 text-xs ml-1 mt-1">
+                          {form.errors.description}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col justify-start py-4 w-full">
+                      <label className="text-[#323338] text-md font-semibold mb-2">
+                        Notes
+                      </label>
+                      <textarea
+                        name="notes"
+                        value={form.values.notes}
+                        onChange={form.handleChange}
+                        className="text-sm placeholder:text-[#E0E0E1] text-[#323338] font-normal self-center py-2 px-1 outline-none bg-[#F5F5F7] w-full"
+                      />
+                      {form.errors.notes && form.touched.notes && (
+                        <div className="text-red-500 text-xs ml-1 mt-1">
+                          {form.errors.notes}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end p-10 space-x-4">
+                    <CancelChanges
+                      handleCloseModal={() => setIsUpdateModalOpen(false)}
+                      isLoading={isLoading}
+                    />
+                    <SaveChanges isLoading={isLoading} />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      )}
+    </>
+  );
+}
+
+export { CreateJob, UpdateItem };
