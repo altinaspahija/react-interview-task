@@ -8,6 +8,7 @@ import { useGetAll, usePost, usePut } from "../../services/useApi";
 import Select from "react-select";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { Category, Job, Status } from "../../types/types";
+import { colorPalette } from "../../types/colors";
 
 interface CreateJobProps {
   showModal: boolean;
@@ -42,8 +43,17 @@ function CreateJob({
   useEffect(() => {
     if (showModal) {
       setId(uuid());
+      form.resetForm();
     }
   }, [showModal]);
+  
+  const categoryOptions = categories?.map(
+    (category: Category, index: number) => ({
+      value: category.name,
+      label: category.name,
+      color: colorPalette[index % colorPalette.length],
+    })
+  );
 
   const CreateJobSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -99,21 +109,6 @@ function CreateJob({
       }
     },
   });
-
-  useEffect(() => {
-    if (showModal) {
-      form.resetForm();
-    }
-  }, [showModal]);
-
-  const colorPalette = ["#4CAF50", "#FFEB3B", "#9C27B0", "#ECDE7C", "#FE4C4A"];
-  const categoryOptions = categories?.map(
-    (category: Category, index: number) => ({
-      value: category.name,
-      label: category.name,
-      color: colorPalette[index % colorPalette.length],
-    })
-  );
 
   return (
     <>
