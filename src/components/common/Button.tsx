@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Job } from "../../types/types";
 import { CreateJob } from "../common/Modal";
 import { FaCheck, FaPlus } from "react-icons/fa";
+import{ FaArrowLeft } from "react-icons/fa";
 import { BiX } from "react-icons/bi";
+import {useNavigate} from "react-router-dom";
 
 function CreateButton(
     { addJob, setFilteredJobs }: { addJob: (newJob: Job) => void, setFilteredJobs: (jobs: Job[]) => void }
@@ -37,6 +39,7 @@ function CreateButton(
        </div>
     )
 }
+
 function CancelChanges({handleCloseModal, isLoading}: {handleCloseModal:()=>void, isLoading: boolean}   ) {
     return (
       <div className="flex flex-row">
@@ -54,5 +57,19 @@ function CancelChanges({handleCloseModal, isLoading}: {handleCloseModal:()=>void
       </div>
     );
   }
+
+function GoBack() {
+    const goBack = useNavigate();
+    return (
+        <div className="flex flex-row">
+       <button onClick={()=>goBack(-1)} className="flex relative bg-[#1264A3] hover:bg-[#0F5C97] hover:shadow-md text-white rounded-md py-5 px-10  w-[160px] h-[30px] align-middle items-center font-normal text-sm">
+       <span>Go Back </span>
+       <div className="flex border-l-[0.5px] border-white w-[40px] h-full absolute right-0 items-center align-middle justify-center">
+       <FaArrowLeft className="w-4 h-4 inline-block self-center bg-transparent"/>
+        </div>
+        </button>
+       </div>
+)
+}
   
-export { CreateButton, SaveChanges, CancelChanges };
+export { CreateButton, SaveChanges, CancelChanges, GoBack };

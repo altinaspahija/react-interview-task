@@ -54,7 +54,7 @@ export default function JobsTable() {
 
   return (
     <div className="my-4 shadow-lg rounded-lg overflow-hidden">
-      <div className="w-full h-[800px] overflow-x-auto overflow-y-auto bg-white ">
+      <div className="w-full h-[600px] overflow-x-auto overflow-y-auto bg-white ">
         <table className="w-full font-semibold">
           <thead className="bg-[#F8F8FA] text-[#323338] text-md font-semibold">
             <tr>
