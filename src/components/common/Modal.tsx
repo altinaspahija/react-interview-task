@@ -106,10 +106,14 @@ function CreateJob({
     }
   }, [showModal]);
 
-  const categoryOptions = categories?.map((category: Category) => ({
-    value: category.name,
-    label: category.name,
-  }));
+  const colorPalette = ["#4CAF50", "#FFEB3B", "#9C27B0", "#ECDE7C", "#FE4C4A"];
+  const categoryOptions = categories?.map(
+    (category: Category, index: number) => ({
+      value: category.name,
+      label: category.name,
+      color: colorPalette[index % colorPalette.length],
+    })
+  );
 
   return (
     <>
@@ -128,20 +132,20 @@ function CreateJob({
                   />
                 </div>
                 <div className="flex flex-row justify-start items-start p-4">
-                <div className="relative group">
-                  <AiFillInfoCircle
-                    className="w-[20px] h-[20px] inline-block mr-2 mb-0.5"
-                    color="#1264A3"
-                  />
+                  <div className="relative group">
+                    <AiFillInfoCircle
+                      className="w-[20px] h-[20px] inline-block mr-2 mb-0.5"
+                      color="#1264A3"
+                    />
 
-                  <div className="absolute bottom-full w-40 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-left text-xs rounded py-1 px-2 transition-opacity duration-300">
-               Fill data to create a job
+                    <div className="absolute bottom-full w-40 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-left text-xs rounded py-1 px-2 transition-opacity duration-300">
+                      Fill data to create a job
+                    </div>
                   </div>
-                </div>
-                <p className="text-[#323338] font-normal text-sm self-center">
-                  Informative piece of text that can be used regarding this
-                  modal.
-                </p>
+                  <p className="text-[#323338] font-normal text-sm self-center">
+                    Informative piece of text that can be used regarding this
+                    modal.
+                  </p>
                 </div>
 
                 <form onSubmit={form.handleSubmit}>
@@ -162,8 +166,9 @@ function CreateJob({
                         {form.errors.name}
                       </div>
                     )}
-
+            
                     <div className="flex flex-row justify-start py-4 w-full space-x-4 text-left">
+                      {/* Category Section */}
                       <div className="flex flex-col w-1/2">
                         <label className="text-[#323338] text-md font-semibold mb-2">
                           Category included
@@ -183,6 +188,22 @@ function CreateJob({
                                 borderColor: "#323338",
                               },
                             }),
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isFocused
+                                ? state.data.color || "#EAEAEA"
+                                : "white",
+                              color: state.isSelected ? "white" : "#323338",
+                              "&:hover": {
+                                backgroundColor: state.data.color, 
+                                color: "white",
+                              },
+                            }),
+                            singleValue: (provided) => ({
+                              ...provided,
+                              display: "flex",
+                              alignItems: "center",
+                            }),
                             placeholder: (provided) => ({
                               ...provided,
                               color: "#E0E0E1",
@@ -195,16 +216,30 @@ function CreateJob({
                           value={form.values.categories?.map((cat: any) => ({
                             value: cat.name,
                             label: cat.name,
+                            color: cat.color,
                           }))}
                           onChange={(selectedOptions: any) => {
                             const selectedCategories = selectedOptions.map(
-                              (option: any) => ({ name: option.value })
+                              (option: any) => ({
+                                name: option.value,
+                                color: option.color,
+                              })
                             );
                             form.setFieldValue(
                               "categories",
                               selectedCategories
                             );
                           }}
+                          formatOptionLabel={(e) => (
+                            <div className="flex items-center">
+                              <span
+                                className="w-2 h-2 rounded-full mr-2"
+                                style={{ backgroundColor: e.color }}
+                              />
+                              {e.label}
+                            </div>
+                          )}
+                          getOptionValue={(e) => e.value}
                         />
                         {form.errors.categories && form.touched.categories && (
                           <div className="text-red-500 text-xs ml-1 mt-1">
@@ -213,6 +248,7 @@ function CreateJob({
                         )}
                       </div>
 
+                      {/* Status Section */}
                       <div className="flex flex-col w-1/2">
                         <label className="text-[#323338] text-md font-semibold mb-2">
                           Status
@@ -232,6 +268,22 @@ function CreateJob({
                                 borderColor: "#323338",
                               },
                             }),
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isFocused
+                                ? state.data.color || "#EAEAEA" 
+                                : "white",
+                              color: state.isSelected ? "white" : "#323338",
+                              "&:hover": {
+                                backgroundColor: state.data.color, 
+                                color: "white",
+                              },
+                            }),
+                            singleValue: (provided) => ({
+                              ...provided,
+                              display: "flex",
+                              alignItems: "center",
+                            }),
                             placeholder: (provided) => ({
                               ...provided,
                               color: "#E0E0E1",
@@ -241,6 +293,7 @@ function CreateJob({
                           options={statuses?.map((status: Status) => ({
                             value: status.label,
                             label: status.label,
+                            color: status.color,
                           }))}
                           placeholder="Select status..."
                           value={
@@ -248,8 +301,9 @@ function CreateJob({
                               ? {
                                   value: form.values.status.label,
                                   label: form.values.status.label,
+                                  color: form.values.status.color,
                                 }
-                              : null 
+                              : null
                           }
                           onChange={(selectedOption: any) => {
                             form.setFieldValue("status", {
@@ -259,8 +313,17 @@ function CreateJob({
                               )?.color,
                             });
                           }}
+                          formatOptionLabel={(e) => (
+                            <div className="flex items-center">
+                              <span
+                                className="w-2 h-2 rounded-full mr-2"
+                                style={{ backgroundColor: e.color }}
+                              />
+                              {e.label}
+                            </div>
+                          )}
+                          getOptionValue={(e) => e.value}
                         />
-
                         {form.errors.status?.label && form.touched.status && (
                           <div className="text-red-500 text-xs ml-1 mt-1">
                             {form.errors.status.label}
