@@ -1,4 +1,4 @@
-import { useGetAll } from "../../services/useApi";
+import { useGetAll, usePost } from "../../services/useApi";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { Job } from "../../types/types";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function JobsTable() {
   const { data: jobs, error, isLoading } = useGetAll("/jobs");
+  const { postData: addNewJob, isLoading: isAdding, error: addError } = usePost();
   const [searchValue, setSearchValue] = useState<string>("");
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
 
@@ -26,6 +27,15 @@ export default function JobsTable() {
         job.name.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredJobs(filtered);
+    }
+  };
+
+  const addJob = async (newJob: Job) => {
+    try {
+      const response = await addNewJob('/jobs', newJob); 
+      setFilteredJobs((prevJobs) => [...prevJobs, response]);
+    } catch (error) {
+      console.error("Error adding job:", error);
     }
   };
 
@@ -73,7 +83,7 @@ export default function JobsTable() {
               <td className="text-right py-4">
                 <div className="flex h-full justify-end">
                   <SearchInput onSearch={handleSearchJobs} />
-                  <CreateButton />
+               <CreateButton addJob={addJob} setFilteredJobs={setFilteredJobs}/>
                 </div>
               </td>
             </tr>
