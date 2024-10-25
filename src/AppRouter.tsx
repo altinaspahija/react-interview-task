@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Jobs from "./pages/Jobs";
-import JobsDetails from "./pages/JobDetails";
+import JobsDetails from "./components/jobs/JobDetails";
 
 
 const AppRouter: React.FC = () => {
