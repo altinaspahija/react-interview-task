@@ -1,10 +1,7 @@
-import React from "react";
-import { useGetAll } from "../../services/useApi";
-import { Status } from "../../types/types";
-
+import { useJobCountsByStatus } from "../../services/useApi";
 
 export default function JobsStatuses() {
-    const { data: statuses, error, isLoading } = useGetAll('/statuses'); 
+  const { statuses, statusCounts, isLoading, error } = useJobCountsByStatus();
 
   if (isLoading) {
     return <div>Loading statuses...</div>;
@@ -13,17 +10,21 @@ export default function JobsStatuses() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
   return (
     <div className="flex justify-between items-center space-x-2 bg-white p-2 shadow-lg rounded-lg">
-      {statuses?.map((status:Status, index:number) => (
-        <div
-          key={index}
-          className={`flex w-1/3 h-[100px] rounded-md text-3xl font-semibold items-center justify-center text-white`}
-          style={{ backgroundColor: status.color }}
-        >
-          {status.label}
-        </div>
-      ))}
+      {statuses.map((status: any, index: number) => {
+        console.log(`Status ${status.label} color:`, status.color);  
+        return (
+          <div
+            key={index}
+            className="flex w-1/3 h-[100px] rounded-lg text-3xl font-semibold items-center justify-center text-white"
+            style={{ backgroundColor: status.color }}  
+          >
+            {statusCounts[status.label]} {status.label}
+          </div>
+        );
+      })}
     </div>
   );
 }
