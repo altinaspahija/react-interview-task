@@ -1,4 +1,5 @@
 import { useJobCountsByStatus } from "../../services/useApi";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function JobsStatuses() {
   const { statuses, statusCounts, isLoading, error } = useJobCountsByStatus();
