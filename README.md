@@ -1,16 +1,14 @@
 # How to run the app
 
-- Open a new terminal and to install dependencies execute: `pnpm i`, prior to that if pnpm is not installed run `npm install -g pnpm`
+- Open a new terminal and install dependencies execute: `pnpm i`, prior to that if pnpm is not installed run `npm install -g pnpm`
 - Run app by executing this command: `pnpm start`
 - Run server by executing this command: `pnpm run json-server`
-- If everything was setup correctly, you can verify app running by typing in the browser: http://localhost:3000
-
-## How to run the app
+- If everything was setup correctly, you can verify app running locally by typing in the browser: http://localhost:3000
 
 - How might you make this app more secure?
 * Authentication and Authorization: Implement user authentication (OAuth or JWT) to ensure only authorized users access certain sections. Role-based access control can restrict who can create, update, or delete job sites and items.
 * Input Sanitization: Ensures that any special characters or unwanted HTML/SQL content are removed from the input.
-* Data Encryption: Use HTTPS and ensure that sensitive information, such as user credentials or any sensitive data, is encrypted in transit. 
+* Data Encryption: Use HTTPS and ensure that sensitive information, such as user credentials or any other sensitive data, is encrypted in transit. 
 * Error Handling: Avoid exposing sensitive error messages to the client side. Log detailed errors server-side and show generic messages to users.
 * Regular Security Audits: Use tools like npm audit to find vulnerabilities in dependencies to enforce secure coding practices.
 
