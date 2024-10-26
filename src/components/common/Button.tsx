@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Job } from "../../types/types";
-import { CreateJob } from "../common/Modal";
+import { CreateJob } from "../modals/CreateJob";
 import { FaCheck, FaPlus } from "react-icons/fa";
 import{ FaArrowLeft } from "react-icons/fa";
 import { BiX } from "react-icons/bi";

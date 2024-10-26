@@ -5,13 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { CreateButton } from "../common/Button";
 import SearchInput from "../common/Search";
 import { useEffect, useState } from "react";
+import Table from "../common/Table";
+import Tooltip from "../common/Tooltip";
 
 export default function JobsTable() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const { data: jobs, error, isLoading } = useGetAll("/jobs");
-  const { postData: addNewJob, isLoading: isAdding, error: addError } = usePost();
-
+  const {
+    postData: addNewJob,
+    isLoading: isAdding,
+    error: addError,
+  } = usePost();
 
   useEffect(() => {
     if (jobs && !searchValue) {
@@ -33,7 +38,7 @@ export default function JobsTable() {
 
   const addJob = async (newJob: Job) => {
     try {
-      const response = await addNewJob('/jobs', newJob); 
+      const response = await addNewJob("/jobs", newJob);
       setFilteredJobs((prevJobs) => [...prevJobs, response]);
     } catch (error) {
       console.error("Error adding job:", error);
@@ -53,74 +58,58 @@ export default function JobsTable() {
     return <div>Error: {error}</div>;
   }
 
+  const columns = [
+    { header: "Jobsite Name", key: "name" as keyof Job },
+    { header: "Status", key: "status" as keyof Job },
+  ];
+
+  const renderStatusButton = (status: any) => (
+    <div className="flex justify-center items-center h-full">
+      <button
+        className={`w-[150px] h-[30px] rounded-md text-sm font-normal flex items-center justify-center text-white`}
+        style={{ backgroundColor: status.color }}
+      >
+        {status.label}
+      </button>
+    </div>
+  );
+
+  const dataWithRenderedStatus = filteredJobs.map((job: any) => ({
+    ...job,
+    status: renderStatusButton(job.status),
+  }));
+
   return (
     <div className="my-4 shadow-lg rounded-lg overflow-hidden">
-      <div className="w-full h-[600px] overflow-x-auto overflow-y-auto bg-white ">
-        <table className="w-full font-semibold">
-          <thead className="bg-[#F8F8FA] text-[#323338] text-md font-semibold">
-            <tr>
-              <th className="text-left py-2 px-4">Jobs List</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="w-full">
-              <td className="flex flex-row items-center justify-start text-sm font-normal p-4 relative">
-                <div className="relative group">
-                  <AiFillInfoCircle
-                    className="w-[20px] h-[20px] inline-block mr-2"
-                    color="#1264A3"
-                  />
+      <div className="w-full h-[600px] overflow-x-auto overflow-y-auto bg-white">
+        <div className="bg-[#F8F8FA] text-[#323338] text-md font-semibold px-4 py-2">
+          <p className="text-left">Jobs</p>
+        </div>
+        <div className="flex justify-between items-center px-4 py-2">
 
-                  <div className="absolute bottom-full mb-2 ml-10 w-16 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded py-1 px-2 transition-opacity duration-300">
-                    Jobs List
-                  </div>
-                </div>
-                <p className="text-[#323338] font-normal text-sm">
-                  Informative piece of text that can be used regarding this
-                  modal.
-                </p>
-              </td>
-              <td className="text-right py-4">
-                <div className="flex h-full justify-end">
-                  <SearchInput onSearch={handleSearchJobs} />
-               <CreateButton addJob={addJob} setFilteredJobs={setFilteredJobs}/>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th className="w-1/4 font-semibold text-center text-md text-[#323338]">
-                Jobsite Name
-              </th>
-              <th className="w-1/4 font-semibold text-center text-md text-[#323338]">
-                Status
-              </th>
-            </tr>
-            {filteredJobs?.map((job: Job, index: number) => (
-              <tr
-                key={index}
-                className={`${
-                  index % 2 !== 0 ? "bg-white" : "bg-[#F8F8FA]"
-                } hover:cursor-pointer`}
-                onClick={() => handleRowClick(job.id)}
-              >
-                <td className="w-1/4 font-semibold text-center text-md text-[#1264A3]">
-                  {job.name}
-                </td>
-                <td className="w-1/4">
-                  <div className="flex justify-center items-center h-full">
-                    <button
-                      className={`w-[150px] h-[30px] rounded-md  text-md font-normal flex items-center justify-center text-white`}
-                      style={{ backgroundColor: job.status.color }}
-                    >
-                      {job.status.label}
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            <div className="flex items-center">
+              <Tooltip text="Jobs list" />
+              <p className="text-[#323338] font-normal text-sm">
+                Informative piece of text that can be used regarding this modal.
+              </p>
+            </div>
+          
+          <div className="flex h-full justify-end align-middle">
+            <div className="w-80 mr-2">
+              <SearchInput onSearch={handleSearchJobs} />
+            </div>
+            <CreateButton addJob={addJob} setFilteredJobs={setFilteredJobs} />
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <Table<Job>
+            data={dataWithRenderedStatus}
+            columns={columns}
+            onRowClick={handleRowClick}
+            textColor="text-[#1264A3]"
+            textAlign="text-center"
+          />
+        </div>
       </div>
     </div>
   );
