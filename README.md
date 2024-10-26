@@ -1,6 +1,6 @@
 # How to run the app
 
-- Open a new terminal and install dependencies execute: `pnpm i`, prior to that if pnpm is not installed run `npm install -g pnpm`
+- Open a new terminal and install dependencies by executing: `pnpm i`, prior to that if pnpm is not installed run `npm install -g pnpm`
 - Run app by executing this command: `pnpm start`
 - Run server by executing this command: `pnpm run json-server`
 - If everything was setup correctly, you can verify app running locally by typing in the browser: http://localhost:3000
