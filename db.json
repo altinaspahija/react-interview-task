@@ -1,75 +1,9 @@
 {
-    "jobs": [
-      {
-        "id": "519d5b43-801f-4146-9196-74efcc3c931a",
-        "name": "1658 E 23rd St, Brooklyn, NY 11229, USA",
-        "categories": [
-          {
-            "id": "3c4ba3ec-9ef7-475d-9a73-6a795a770b54",
-            "name": "Sidewalk Shed",
-            "items": [
-              {
-                "id": "7d262d65-47e4-4b14-80a2-28ff1be024c7",
-                "name": "G42295",
-                "quantity": 10,
-                "description": "Description for item 1",
-                "notes": "Notes for item 1"
-              },
-              {
-                "id": "ec5b1c83-b659-4c6a-bc7f-bae68db66dd6",
-                "name": "A68446",
-                "quantity": 20,
-                "description": "Description for item 2",
-                "notes": "Notes for item 2"
-              }
-            ]
-          },
-          {
-            "id": "b847d53c-9486-4efd-b9e3-4739ca76455a",
-            "name": "Scaffold",
-            "items": [
-              {
-                "id": "6c3ff0da-626f-4287-910e-196c4183ecc8",
-                "name": "R69895",
-                "quantity": 30,
-                "description": "Description for item 3",
-                "notes": "Notes for item 3"
-              }
-            ]
-          }
-        ],
-        "status": {
-          "label": "On Road",
-          "color": "#ECDE7C"
-        }
-      },
-      {
-        "id": "dcfc8ba1-cdbe-46c1-8e04-173b2e5dcb0c",
-        "name": "1705 E 22nd St, Brooklyn, NY 11229, USA",
-        "categories": [
- 
-        ],
-        "status": {
-          "label": "Completed",
-          "color": "#7AC14D"
-        }
-    }
-    ],
-    "statuses": [
-      {
-        "label": "On Road",
-        "color": "#ECDE7C"
-      },
-      {
-        "label": "Completed",
-        "color": "#7AC14D"
-      },
-      {
-        "label": "On Hold",
-        "color": "#FE4C4A"
-      }
-    ],
-    "categories": [
+  "jobs": [
+    {
+      "id": "519d5b43-801f-4146-9196-74efcc3c931a",
+      "name": "1658 E 23rd St, Brooklyn, NY 11229, USA",
+      "categories": [
         {
           "id": "3c4ba3ec-9ef7-475d-9a73-6a795a770b54",
           "name": "Sidewalk Shed",
@@ -78,15 +12,15 @@
               "id": "7d262d65-47e4-4b14-80a2-28ff1be024c7",
               "name": "G42295",
               "quantity": 10,
-              "description": "Description for item 1",
-              "notes": "Notes for item 1"
+              "description": "Heavy-duty sidewalk protection material",
+              "notes": "Inspect weekly for stability"
             },
             {
               "id": "ec5b1c83-b659-4c6a-bc7f-bae68db66dd6",
               "name": "A68446",
               "quantity": 20,
-              "description": "Description for item 2",
-              "notes": "Notes for item 2"
+              "description": "Lightweight sidewalk covering",
+              "notes": "Replace after 6 months of usage"
             }
           ]
         },
@@ -98,33 +32,220 @@
               "id": "6c3ff0da-626f-4287-910e-196c4183ecc8",
               "name": "R69895",
               "quantity": 30,
-              "description": "Description for item 3",
-              "notes": "Notes for item 3"
+              "description": "Basic scaffold frame for general use",
+              "notes": "Ensure safety locks are engaged"
             }
           ]
         }
       ],
-    "items": [
-      {
-        "id": "7d262d65-47e4-4b14-80a2-28ff1be024c7",
-        "name": "G42295",
-        "quantity": 10,
-        "description": "Description for item 1",
-        "notes": "Notes for item 1"
-      },
-      {
-        "id": "ec5b1c83-b659-4c6a-bc7f-bae68db66dd6",
-        "name": "A68446",
-        "quantity": 20,
-        "description": "Description for item 2",
-        "notes": "Notes for item 2"
-      },
-      {
-        "id": "6c3ff0da-626f-4287-910e-196c4183ecc8",
-        "name": "R69895",
-        "quantity": 30,
-        "description": "Description for item 3",
-        "notes": "Notes for item 3"
+      "status": {
+        "label": "On Road",
+        "color": "#ECDE7C"
       }
-    ]
-  }
+    },
+    {
+      "id": "dcfc8ba1-cdbe-46c1-8e04-173b2e5dcb0c",
+      "name": "1705 E 22nd St, Brooklyn, NY 11229, USA",
+      "categories": [],
+      "status": {
+        "label": "Completed",
+        "color": "#7AC14D"
+      }
+    },
+    {
+      "id": "a1c2b345-75df-4120-b2d8-785ccb58e928",
+      "name": "456 Elm St, New York, NY 10001, USA",
+      "categories": [
+        {
+          "id": "c4ba3ec3-47e4-4c6f-910e-1a14b0ec7ecc",
+          "name": "Bracing",
+          "items": [
+            {
+              "id": "2f4c6a9f-6de4-4b32-b6a7-483c78422c6a",
+              "name": "J88234",
+              "quantity": 5,
+              "description": "Structural bracing component",
+              "notes": "Ensure bolts are tightened before use"
+            }
+          ]
+        }
+      ],
+      "status": {
+        "label": "On Hold",
+        "color": "#FE4C4A"
+      }
+    },
+    {
+      "id": "e7f8a9b6-2f9d-45e1-845b-30fa34f0a2cd",
+      "name": "99 5th Ave, New York, NY 10003, USA",
+      "categories": [
+        {
+          "id": "7a5d9f0b-326d-451a-9e8a-65df984a8e9f",
+          "name": "Roofing",
+          "items": [
+            {
+              "id": "5c6d3f2b-9481-47b7-8c6b-8274e2a4f382",
+              "name": "L38274",
+              "quantity": 15,
+              "description": "Waterproof roofing material",
+              "notes": "Check resistance after installation"
+            },
+            {
+              "id": "8f6c9b7e-5e4d-4a0b-8563-527cfa7e6238",
+              "name": "K38295",
+              "quantity": 25,
+              "description": "UV-resistant roof sheeting",
+              "notes": "Inspect every six months"
+            }
+          ]
+        }
+      ],
+      "status": {
+        "label": "On Road",
+        "color": "#ECDE7C"
+      }
+    },
+    {
+      "id": "50e377c4-ac74-42fb-90f9-f981452ea77d",
+      "name": "99 New Ave, New York, NY 10003, USA",
+      "categories": [
+        {
+          "id": "7a5d9f0b-326d-451a-9e8a-65df984a8e9f",
+          "name": "Roofing",
+          "items": []
+        }
+      ],
+      "status": {
+        "label": "On Hold",
+        "color": "#FE4C4A"
+      },
+      "items": []
+    }
+  ],
+  "statuses": [
+    {
+      "label": "On Road",
+      "color": "#ECDE7C"
+    },
+    {
+      "label": "Completed",
+      "color": "#7AC14D"
+    },
+    {
+      "label": "On Hold",
+      "color": "#FE4C4A"
+    }
+  ],
+  "categories": [
+    {
+      "id": "3c4ba3ec-9ef7-475d-9a73-6a795a770b54",
+      "name": "Sidewalk Shed",
+      "items": [
+        {
+          "id": "7d262d65-47e4-4b14-80a2-28ff1be024c7",
+          "name": "G42295",
+          "quantity": 10,
+          "description": "Heavy-duty sidewalk protection material",
+          "notes": "Inspect weekly for stability"
+        },
+        {
+          "id": "ec5b1c83-b659-4c6a-bc7f-bae68db66dd6",
+          "name": "A68446",
+          "quantity": 20,
+          "description": "Lightweight sidewalk covering",
+          "notes": "Replace after 6 months of usage"
+        }
+      ]
+    },
+    {
+      "id": "b847d53c-9486-4efd-b9e3-4739ca76455a",
+      "name": "Scaffold",
+      "items": [
+        {
+          "id": "6c3ff0da-626f-4287-910e-196c4183ecc8",
+          "name": "R69895",
+          "quantity": 30,
+          "description": "Basic scaffold frame for general use",
+          "notes": "Ensure safety locks are engaged"
+        }
+      ]
+    },
+    {
+      "id": "c4ba3ec3-47e4-4c6f-910e-1a14b0ec7ecc",
+      "name": "Bracing",
+      "items": [
+        {
+          "id": "2f4c6a9f-6de4-4b32-b6a7-483c78422c6a",
+          "name": "J88234",
+          "quantity": 5,
+          "description": "Structural bracing component",
+          "notes": "Ensure bolts are tightened before use"
+        }
+      ]
+    },
+    {
+      "id": "7a5d9f0b-326d-451a-9e8a-65df984a8e9f",
+      "name": "Roofing",
+      "items": [
+        {
+          "id": "5c6d3f2b-9481-47b7-8c6b-8274e2a4f382",
+          "name": "L38274",
+          "quantity": 15,
+          "description": "Waterproof roofing material",
+          "notes": "Check resistance after installation"
+        },
+        {
+          "id": "8f6c9b7e-5e4d-4a0b-8563-527cfa7e6238",
+          "name": "K38295",
+          "quantity": 25,
+          "description": "UV-resistant roof sheeting",
+          "notes": "Inspect every six months"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "7d262d65-47e4-4b14-80a2-28ff1be024c7",
+      "name": "G42295",
+      "quantity": 10,
+      "description": "Heavy-duty sidewalk protection material",
+      "notes": "Inspect weekly for stability"
+    },
+    {
+      "id": "ec5b1c83-b659-4c6a-bc7f-bae68db66dd6",
+      "name": "A68446",
+      "quantity": 20,
+      "description": "Lightweight sidewalk covering",
+      "notes": "Replace after 6 months of usage"
+    },
+    {
+      "id": "6c3ff0da-626f-4287-910e-196c4183ecc8",
+      "name": "R69895",
+      "quantity": 30,
+      "description": "Basic scaffold frame for general use",
+      "notes": "Ensure safety locks are engaged"
+    },
+    {
+      "id": "2f4c6a9f-6de4-4b32-b6a7-483c78422c6a",
+      "name": "J88234",
+      "quantity": 5,
+      "description": "Structural bracing component",
+      "notes": "Ensure bolts are tightened before use"
+    },
+    {
+      "id": "5c6d3f2b-9481-47b7-8c6b-8274e2a4f382",
+      "name": "L38274",
+      "quantity": 15,
+      "description": "Waterproof roofing material",
+      "notes": "Check resistance after installation"
+    },
+    {
+      "id": "8f6c9b7e-5e4d-4a0b-8563-527cfa7e6238",
+      "name": "K38295",
+      "quantity": 25,
+      "description": "UV-resistant roof sheeting",
+      "notes": "Inspect every six months"
+    }
+  ]
+}
