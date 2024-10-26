@@ -321,7 +321,7 @@ export function CreateJob({
                       </div>
                     </div>
   
-                    <div className="flex items-center justify-end p-10 space-x-4">
+                    <div className="flex items-center justify-end py-10 px-4 space-x-4">
                       <CancelChanges
                         handleCloseModal={() => setShowModal(false)}
                         isLoading={isLoading}
