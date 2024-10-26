@@ -15,7 +15,7 @@ export default function JobsStatuses() {
   return (
     <div className="flex justify-between items-center space-x-2 bg-white p-2 shadow-lg rounded-lg">
       {statuses.map((status: any, index: number) => {
-        console.log(`Status ${status.label} color:`, status.color);  
+
         return (
           <div
             key={index}
