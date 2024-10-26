@@ -1,5 +1,4 @@
 import { useGetAll, usePost } from "../../services/useApi";
-import { AiFillInfoCircle } from "react-icons/ai";
 import { Job } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { CreateButton } from "../common/Button";
@@ -59,14 +58,20 @@ export default function JobsTable() {
   }
 
   const columns = [
+    { header: "", key: "" as keyof Job },
+    { header: "", key: "" as keyof Job },
+    { header: "", key: "" as keyof Job },
     { header: "Jobsite Name", key: "name" as keyof Job },
     { header: "Status", key: "status" as keyof Job },
+    { header: "", key: "" as keyof Job },
+    { header: "", key: "" as keyof Job },
+    { header: "", key: "" as keyof Job },
   ];
 
   const renderStatusButton = (status: any) => (
     <div className="flex justify-center items-center h-full">
       <button
-        className={`w-[150px] h-[30px] rounded-md text-sm font-normal flex items-center justify-center text-white`}
+        className={`w-[150px] h-[35px] rounded-md text-sm font-normal flex items-center justify-center text-white`}
         style={{ backgroundColor: status.color }}
       >
         {status.label}
@@ -101,16 +106,15 @@ export default function JobsTable() {
             <CreateButton addJob={addJob} setFilteredJobs={setFilteredJobs} />
           </div>
         </div>
-        <div className="flex justify-center">
+
           <Table<Job>
             data={dataWithRenderedStatus}
             columns={columns}
             onRowClick={handleRowClick}
             textColor="text-[#1264A3]"
-            textAlign="text-center"
           />
         </div>
       </div>
-    </div>
+  
   );
 }

@@ -31,8 +31,6 @@ export default function JobsDetails() {
   useEffect(() => {
     if (selectedCategory) {
       setFilteredItems(selectedCategory.items);
-    } else if (job?.categories?.length > 0) {
-      setSelectedCategory(job.categories[0]);
     }
   }, [selectedCategory, job]);
 
@@ -47,8 +45,15 @@ export default function JobsDetails() {
   };
 
   const handleCategoryClick = (category: Category) => {
-    setSelectedCategory(category);
+    if (selectedCategory?.id === category.id) {
+      setSelectedCategory(null); 
+      setFilteredItems([]);     
+    } else {
+      setSelectedCategory(category);
+      setSearchValue(""); 
+    }
   };
+  
 
   const handleRowClick = (itemId: string) => {
     setIsUpdateModalOpen(true);
@@ -113,7 +118,8 @@ export default function JobsDetails() {
             <p className="text-md font-semibold text-[#323338]">
               {selectedCategory
                 ? selectedCategory.name
-                : job.categories[0]?.name}
+                : "Data Grid"
+                }
             </p>
             <div className="w-full max-w-sm mt-1">
               <SearchInput onSearch={handleSearchItems} />
@@ -126,7 +132,7 @@ export default function JobsDetails() {
                   columns={columns}
                   onRowClick={handleRowClick}
                   textColor="text-black"
-                  textAlign="text-left"
+      
                 />
               ) : job.categories.length > 0 && selectedCategory == null ? (
                 <div className="flex items-center justify-center h-[400px]">

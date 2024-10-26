@@ -4,22 +4,20 @@ interface TableProps<T> {
   columns: { header: string; key: keyof T }[];
   onRowClick: (id: string) => void;
   textColor: string;
-  textAlign?: string;
 }
 
 const Table = <T extends { id: string }>({
   data,
   columns,
   onRowClick,
-  textColor,
-  textAlign,
+  textColor
 }: TableProps<T>) => {
   return (
     <table className="bg-white w-full justify-center">
       <thead className="bg-white text-[#323338] text-md font-semibold">
         <tr>
           {columns.map((column, index) => (
-            <th key={index} className={`py-2 px-4 ${textAlign}`}>
+            <th key={index} className={`py-2 px-4 ${column.key == "status" ? "text-center" :"text-left" }`}>
               {column.header}
             </th>
           ))}
@@ -33,7 +31,7 @@ const Table = <T extends { id: string }>({
             onClick={() => onRowClick?.(row.id as string)}
           >
             {columns.map((column, colIndex) => (
-              <td key={colIndex} className={`py-2 px-4 ${textColor} ${textAlign} `}>
+              <td key={colIndex} className={`py-2 px-4 ${textColor} ${column.key == "status" ? "text-center" :"text-left" }`}>
                 {row[column.key] as any}
               </td>
             ))}
