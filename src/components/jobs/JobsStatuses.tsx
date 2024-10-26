@@ -4,7 +4,7 @@ export default function JobsStatuses() {
   const { statuses, statusCounts, isLoading, error } = useJobCountsByStatus();
 
   if (isLoading) {
-    return <div>Loading statuses...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {

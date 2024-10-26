@@ -8,6 +8,7 @@ import { FaCheck } from "react-icons/fa";
 import { UpdateItem } from "../modals/UpdateJob";
 import NoDataFound from "../common/NoDataFound";
 import Table from "../common/Table";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function JobsDetails() {
   const { id } = useParams();
@@ -69,7 +70,7 @@ export default function JobsDetails() {
   ];
 
   if (isJobLoading) {
-    return <div>Loading details...</div>;
+    return <LoadingSpinner />;
   }
 
   if (jobError) {

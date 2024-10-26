@@ -6,6 +6,7 @@ import SearchInput from "../common/Search";
 import { useEffect, useState } from "react";
 import Table from "../common/Table";
 import Tooltip from "../common/Tooltip";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function JobsTable() {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -50,13 +51,13 @@ export default function JobsTable() {
   };
 
   if (isLoading) {
-    return <div>Loading jobs...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+  
   const columns = [
     { header: "", key: "" as keyof Job },
     { header: "", key: "" as keyof Job },
