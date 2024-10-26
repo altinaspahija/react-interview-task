@@ -11,9 +11,9 @@
             {
               "id": "7d262d65-47e4-4b14-80a2-28ff1be024c7",
               "name": "G42299",
-              "quantity": 11,
+              "quantity": 20,
               "description": "Heavy-duty sidewalk protection material",
-              "notes": "Inspect weekly for stability"
+              "notes": "Inspect monthly for stability"
             },
             {
               "id": "ec5b1c83-b659-4c6a-bc7f-bae68db66dd6",
@@ -58,13 +58,13 @@
       "categories": [
         {
           "id": "c4ba3ec3-47e4-4c6f-910e-1a14b0ec7ecc",
-          "name": "Bracing",
+          "name": "Storing",
           "items": [
             {
               "id": "2f4c6a9f-6de4-4b32-b6a7-483c78422c6a",
               "name": "J88234",
               "quantity": 5,
-              "description": "Structural bracing component",
+              "description": "Structural storing component",
               "notes": "Ensure bolts are tightened before use"
             }
           ]
@@ -118,6 +118,27 @@
       "status": {
         "label": "On Hold",
         "color": "#FE4C4A"
+      },
+      "items": []
+    },
+    {
+      "id": "2328f3c0-fd25-4fa7-a46f-a9c44d1e2a8e",
+      "name": "1005 Roger St, New York, NY 10003, USA",
+      "categories": [
+        {
+          "id": "3c4ba3ec-9ef7-475d-9a73-6a795a770b54",
+          "name": "Sidewalk Shed",
+          "items": []
+        },
+        {
+          "id": "c4ba3ec3-47e4-4c6f-910e-1a14b0ec7ecc",
+          "name": "Storing",
+          "items": []
+        }
+      ],
+      "status": {
+        "label": "On Road",
+        "color": "#ECDE7C"
       },
       "items": []
     }
@@ -175,13 +196,13 @@
     },
     {
       "id": "c4ba3ec3-47e4-4c6f-910e-1a14b0ec7ecc",
-      "name": "Bracing",
+      "name": "Storing",
       "items": [
         {
           "id": "2f4c6a9f-6de4-4b32-b6a7-483c78422c6a",
           "name": "J88234",
           "quantity": 5,
-          "description": "Structural bracing component",
+          "description": "Structural storing component",
           "notes": "Ensure bolts are tightened before use"
         }
       ]
