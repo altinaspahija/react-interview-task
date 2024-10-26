@@ -4,9 +4,8 @@ import { CancelChanges, SaveChanges } from "../common/Button";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Tooltip from "../common/Tooltip";
-import { Item } from "../../types/types";
+import { Item, Job } from "../../types/types";
 import { usePut } from "../../services/useApi";
-
 
 interface UpdateItemProps {
   isUpdateModalOpen: boolean;
@@ -16,6 +15,8 @@ interface UpdateItemProps {
   setFilteredItems: (items: Item[]) => void;
   originalItems: Item[];
   setOriginalItems: (items: Item[]) => void;
+  id: string | undefined; 
+  job: Job | undefined;
 }
 
 export function UpdateItem({
@@ -24,18 +25,19 @@ export function UpdateItem({
   itemId,
   filteredItems,
   setFilteredItems,
+  originalItems,
+  setOriginalItems,
+  id,
+  job
 }: UpdateItemProps) {
-  const { putData: updateItem, isLoading, error } = usePut();
-
+  const { putData: updateJob, isLoading, error } = usePut();
   const itemSelected = filteredItems.find((item) => item.id === itemId);
-
   const UpdateItemSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     quantity: Yup.number().required("Quantity is required"),
     description: Yup.string().required("Description is required"),
     notes: Yup.string().required("Notes is required"),
   });
-
   const form = useFormik({
     initialValues: {
       id: itemSelected?.id || "0",
@@ -47,12 +49,30 @@ export function UpdateItem({
     validationSchema: UpdateItemSchema,
     onSubmit: async (values: Item) => {
       try {
-        const updatedItem = await updateItem(`/items`, values.id, values);
+        const updatedJob = {
+          ...job,
+          categories: job!.categories.map((category) =>
+            category.items.some((item) => item.id === itemId)
+              ? {
+                  ...category,
+                  items: category.items.map((item) =>
+                    item.id === itemId ? { ...item, ...values } : item
+                  ),
+                }
+              : category
+          ),
+        };
+
+        await updateJob(`/jobs`,id!, updatedJob);
+
+
         setFilteredItems(
-          filteredItems?.map((item) =>
-            item.id === itemId ? updatedItem : item
-          )
+          filteredItems.map((item) => (item.id === itemId ? { ...item, ...values } : item))
         );
+        setOriginalItems(
+          originalItems.map((item) => (item.id === itemId ? { ...item, ...values } : item))
+        );
+
         setIsUpdateModalOpen(false);
       } catch (error) {
         console.error("Error updating item:", error);
@@ -190,5 +210,3 @@ export function UpdateItem({
     </>
   );
 }
-
-

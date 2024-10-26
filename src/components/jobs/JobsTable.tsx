@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useGetAll, usePost } from "../../services/useApi";
 import { Job } from "../../types/types";
 import { CreateButton } from "../common/Button";
@@ -16,24 +16,23 @@ export default function JobsTable() {
   const { postData: addNewJob, isLoading: isAdding, error: addError } = usePost();
   const navigateTo = useNavigate();
 
-  const debouncedSearchValue = useMemo(
-    () => debounce((value: string) => value.trim().toLowerCase(), 300),
-    []
-  )(searchValue);
-
   useEffect(() => {
     if (jobs) setFilteredJobs(jobs);
   }, [jobs]);
 
+  const handleSearchInput = debounce((value: string) => {
+    setSearchValue(value.trim().toLowerCase());
+  }, 300);
+
   const filteredData = useMemo(() => {
-    if (!debouncedSearchValue || !filteredJobs) return filteredJobs;
-    return filteredJobs.filter((job: Job) => job.name.toLowerCase().includes(debouncedSearchValue));
-  }, [filteredJobs, debouncedSearchValue]);
+    if (!searchValue) return filteredJobs;
+    return filteredJobs.filter((job: Job) => job.name.toLowerCase().includes(searchValue));
+  }, [filteredJobs, searchValue]);
 
   const addJob = async (newJob: Job) => {
     try {
       await addNewJob("/jobs", newJob);
-      setSearchValue("");
+      setFilteredJobs(prevJobs => [...prevJobs, newJob]);
     } catch (error) {
       console.error("Error adding job:", error);
     }
@@ -68,14 +67,14 @@ export default function JobsTable() {
     </div>
   );
 
-  const dataWithRenderedStatus = (filteredData || []).map((job: any) => ({
+  const dataWithRenderedStatus = filteredData.map((job: any) => ({
     ...job,
     status: renderStatusButton(job.status),
   }));
 
   return (
     <div className="my-4 shadow-lg rounded-lg overflow-hidden">
-      <div className="w-full  bg-white">
+      <div className="w-full bg-white">
         <div className="bg-[#F8F8FA] text-[#323338] text-md font-semibold px-4 py-2">
           <p className="text-left">Jobs</p>
         </div>
@@ -88,20 +87,20 @@ export default function JobsTable() {
           </div>
           <div className="flex h-full justify-end align-middle">
             <div className="w-80 mr-2">
-              <SearchInput onSearch={(value) => setSearchValue(value)} />
+              <SearchInput onSearch={handleSearchInput} />
             </div>
-            <CreateButton addJob={addJob} setFilteredJobs={setFilteredJobs}/>
+            <CreateButton addJob={addJob} setFilteredJobs={setFilteredJobs} />
           </div>
         </div>
-     
+
         <div className="w-full h-[600px] overflow-x-auto overflow-y-auto">
-        <Table<Job>
-          data={dataWithRenderedStatus}
-          columns={columns}
-          onRowClick={handleRowClick}
-          textColor="text-[#1264A3]"
-        />
-      </div>
+          <Table<Job>
+            data={dataWithRenderedStatus}
+            columns={columns}
+            onRowClick={handleRowClick}
+            textColor="text-[#1264A3]"
+          />
+        </div>
       </div>
     </div>
   );
