@@ -94,6 +94,26 @@ export function usePut() {
   return { putData, error, isLoading };
 }
 
+export function useDelete() {
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const deleteData = async (endpoint: string, id: string) => {
+    setIsLoading(true);
+    try {
+      await apiService.delete(endpoint, id);
+      setError(null);
+    } catch (err: any) {
+      setError(err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { deleteData, error, isLoading };
+}
+
 export function useJobCountsByStatus() {
   const [statuses, setStatuses] = useState<any[]>([]);
   const [statusCounts, setStatusCounts] = useState<Record<string, number>>({});
