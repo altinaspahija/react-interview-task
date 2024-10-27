@@ -191,6 +191,7 @@ export function CreateJob({
                                 ...provided,
                                 display: "flex",
                                 alignItems: "center",
+                                
                               }),
                               placeholder: (provided) => ({
                                 ...provided,
@@ -258,15 +259,16 @@ export function CreateJob({
                               }),
                               option: (provided, state) => ({
                                 ...provided,
-                                backgroundColor: state.isFocused
-                                  ? state.data.color || "#EAEAEA"
-                                  : "white",
-                                color: state.isSelected ? "white" : "#323338",
+                                backgroundColor: state.isFocused || state.isSelected
+                                  ? state.data.color || "#EAEAEA"  
+                                  : "white",  
+                                color: state.isFocused ? "white" : state.isSelected ? "#323338" : "#323338", 
                                 "&:hover": {
-                                  backgroundColor: state.data.color,
-                                  color: "white",
+                                  backgroundColor: state.data.color, 
+                                  color: "white", 
                                 },
                               }),
+                              
                               singleValue: (provided) => ({
                                 ...provided,
                                 display: "flex",
